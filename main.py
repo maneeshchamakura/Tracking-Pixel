@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Response
-import httpx
+from fastapi.responses import FileResponse
+import os
 
 app = FastAPI()
 
@@ -11,12 +12,12 @@ async def get_image():
     global test_counter
     test_counter += 1
 
-    image_url = "https://via.placeholder.com/1"
-    async with httpx.AsyncClient() as client:
-        response = await client.get(image_url)
+    image_path = "local_image.png"
 
-    # Return the image as a response
-    return Response(content=response.content, media_type="image/png")
+    if os.path.exists(image_path):
+        return FileResponse(image_path, media_type="image/png")
+    else:
+        return Response(content="Image not found", media_type="text/plain", status_code=404)
 
 @app.get("/get-counter")
 async def get_counter():
