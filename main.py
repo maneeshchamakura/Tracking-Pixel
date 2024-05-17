@@ -13,9 +13,13 @@ async def get_image():
     test_counter += 1
 
     image_path = "local_image.png"
-
+    extra_headers = {
+        "Content-Type": "image/jpeg",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache"
+    }
     if os.path.exists(image_path):
-        return FileResponse(image_path, media_type="image/png")
+        return FileResponse(image_path, media_type="image/png", headers=extra_headers)
     else:
         return Response(content="Image not found", media_type="text/plain", status_code=404)
 
