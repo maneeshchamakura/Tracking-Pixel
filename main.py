@@ -24,6 +24,12 @@ async def get_counter():
     global test_counter
     return {"test": test_counter}
 
+@app.get("/reset-counter")
+async def get_counter():
+    global test_counter
+    test_counter = 0
+    return {"reset": test_counter}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
