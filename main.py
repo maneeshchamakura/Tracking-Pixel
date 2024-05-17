@@ -34,6 +34,11 @@ async def get_counter():
     test_counter = 0
     return {"reset": test_counter}
 
+@app.head("/health")
+async def health_check():
+    # Return a minimal response with status code 200 (OK)
+    return Response(status_code=200)
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
